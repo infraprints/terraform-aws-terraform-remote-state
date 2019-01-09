@@ -21,6 +21,6 @@ validate:
 
 analysis:
   stage: "Analysis"
-  image: cardboardci/tflint:alpha
+  image: quay.io/cardboardci/tflint:alpha
   script:
     - tflint
