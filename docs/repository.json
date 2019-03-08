@@ -1,8 +1,18 @@
 {
-  "name": "[PLACEHOLDER]",
-  "tagline": "[PLACEHOLDER]",
+  "name": "AWS Terraform Remote State Terraform module",
+  "slug": "terraform-aws-tf-remote-state",
+  "namespace": "aws",
+  "project": "infraprints",
+  "description": "Provision the terraform backend in S3 and DynamoDB.",
   "license": {
-    "name": "[PLACEHOLDER]"
+    "name": "MIT"
   },
-  "tags": ["[PLACEHOLDER]"]
+  "tags": [
+    "terraform",
+    "terraform-module",
+    "aws",
+    "aws-s3",
+    "aws-dynamodb",
+    "terraform-backend"
+  ]
 }
