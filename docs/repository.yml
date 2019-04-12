@@ -10,4 +10,6 @@ tags:
   - terraform
   - terraform-module
   - aws
-  - 
+  - aws-s3
+  - aws-dynamodb
+  - remote-state
