@@ -1,6 +1,6 @@
 ---
 name: AWS Terraform Remote State Terraform module
-slug: tf-remote-state
+slug: terraform-remote-state
 project: infraprints
 namespace: [terraform, aws]
 description: Provision the terraform backend in S3 and DynamoDB.
