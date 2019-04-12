@@ -3,7 +3,7 @@ name: AWS Terraform Remote State
 slug: terraform-remote-state
 project: infraprints
 namespace: [terraform, aws]
-description: Provision the terraform backend in S3 and DynamoDB.
+description: Provision storage and locking mechanisms for Terraform.
 license:
   name: MIT
 tags:
