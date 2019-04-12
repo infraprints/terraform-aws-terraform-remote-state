@@ -1,5 +1,5 @@
 ---
-name: AWS Terraform Remote State Terraform module
+name: AWS Terraform Remote State
 slug: terraform-remote-state
 project: infraprints
 namespace: [terraform, aws]
