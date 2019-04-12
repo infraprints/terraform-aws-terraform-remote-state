@@ -1,0 +1,15 @@
+---
+name: AWS Terraform Remote State
+slug: terraform-remote-state
+project: infraprints
+namespace: [terraform, aws]
+description: Provision storage and locking mechanisms for Terraform.
+license:
+  name: MIT
+tags:
+  - terraform
+  - terraform-module
+  - aws
+  - aws-s3
+  - aws-dynamodb
+  - remote-state
