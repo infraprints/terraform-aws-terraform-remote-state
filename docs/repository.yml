@@ -9,8 +9,5 @@ license:
 tags:
   - terraform
   - terraform-module
-  - terraform-backend
-  - remote-state
   - aws
-  - aws-s3
-  - aws-dynamo
+  - 
