@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "state_storage" {
-  bucket        = "${var.bucket}"
-  region        = "${var.region}"
-  force_destroy = "${var.force_destroy}"
+  bucket        = var.bucket
+  region        = var.region
+  force_destroy = var.force_destroy
 
   versioning {
     enabled = true
@@ -15,17 +15,20 @@ resource "aws_s3_bucket" "state_storage" {
     }
   }
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "aws_dynamodb_table" "lock_table" {
-  name           = "${var.dynamo_name}"
-  read_capacity  = "${var.read_capacity}"
-  write_capacity = "${var.write_capacity}"
+  name           = var.dynamo_name
+  read_capacity  = var.read_capacity
+  write_capacity = var.write_capacity
   hash_key       = "LockID"
 
   lifecycle {
-    ignore_changes = ["read_capacity", "write_capacity"]
+    ignore_changes = [
+      read_capacity,
+      write_capacity,
+    ]
   }
 
   attribute {
@@ -33,5 +36,6 @@ resource "aws_dynamodb_table" "lock_table" {
     type = "S"
   }
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
+
