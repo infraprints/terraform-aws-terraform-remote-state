@@ -1,33 +1,34 @@
 variable "tags" {
-  type    = "map"
+  type    = map(string)
   default = {}
 }
 
 variable "region" {
-  type = "string"
+  type = string
 }
 
 variable "bucket" {
-  type = "string"
+  type = string
 }
 
 variable "force_destroy" {
-  type    = "string"
+  type    = string
   default = "true"
 }
 
 variable "dynamo_name" {
-  type = "string"
+  type = string
 }
 
 variable "read_capacity" {
-  type = "string"
+  type = string
 
   default = 5
 }
 
 variable "write_capacity" {
-  type = "string"
+  type = string
 
   default = 5
 }
+
