@@ -3,7 +3,6 @@
 
 resource "aws_s3_bucket" "default" {
   bucket        = var.bucket
-  region        = var.region
   force_destroy = var.force_destroy
 
   versioning {
@@ -98,7 +97,7 @@ resource "aws_s3_bucket_public_access_block" "default" {
 ## DynamoDB Table - Lock table
 
 resource "aws_dynamodb_table" "default" {
-  name           = var.dynamo_name
+  name           = var.table
   read_capacity  = var.read_capacity
   write_capacity = var.write_capacity
   hash_key       = "LockID"
