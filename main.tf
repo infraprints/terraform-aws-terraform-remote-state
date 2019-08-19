@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "state_storage" {
+resource "aws_s3_bucket" "default" {
   bucket        = var.bucket
   region        = var.region
   force_destroy = var.force_destroy
@@ -18,7 +18,15 @@ resource "aws_s3_bucket" "state_storage" {
   tags = var.tags
 }
 
-resource "aws_dynamodb_table" "lock_table" {
+resource "aws_s3_bucket_public_access_block" "default" {
+  bucket                  = aws_s3_bucket.default.id
+  block_public_acls       = true
+  ignore_public_acls      = true
+  block_public_policy     = true
+  restrict_public_buckets = true
+}
+
+resource "aws_dynamodb_table" "default" {
   name           = var.dynamo_name
   read_capacity  = var.read_capacity
   write_capacity = var.write_capacity
