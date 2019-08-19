@@ -22,3 +22,10 @@ output "bucket_arn" {
   value = aws_s3_bucket.default.arn
 }
 
+output "read_policy" {
+  value = data.aws_iam_policy_document.read.json
+}
+
+output "write_policy" {
+  value = data.aws_iam_policy_document.write.json
+}
