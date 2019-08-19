@@ -1,3 +1,6 @@
+##
+## S3 Bucket - Remote state storage
+
 resource "aws_s3_bucket" "default" {
   bucket        = var.bucket
   region        = var.region
@@ -5,6 +8,10 @@ resource "aws_s3_bucket" "default" {
 
   versioning {
     enabled = true
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 
   server_side_encryption_configuration {
@@ -18,6 +25,67 @@ resource "aws_s3_bucket" "default" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket_policy" "default" {
+  bucket = aws_s3_bucket.default.id
+  policy = data.aws_iam_policy_document.default.json
+}
+
+data "aws_iam_policy_document" "default" {
+  statement {
+    sid       = "ForceSSLOnlyAccess"
+    effect    = "Deny"
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.default.arn}/*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
+
+  statement {
+    sid       = "ForceAES256EncryptionHeader"
+    effect    = "Deny"
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.default.arn}/*"]
+
+    principals {
+      identifiers = ["*"]
+      type        = "AWS"
+    }
+
+    condition {
+      test     = "StringNotEquals"
+      variable = "s3:x-amz-server-side-encryption"
+      values   = ["AES256"]
+    }
+  }
+
+  statement {
+    sid       = "ForceEncryptedUploads"
+    effect    = "Deny"
+    actions   = ["s3:PutObject", ]
+    resources = ["${aws_s3_bucket.default.arn}/*"]
+
+    principals {
+      identifiers = ["*"]
+      type        = "AWS"
+    }
+
+    condition {
+      test     = "Null"
+      variable = "s3:x-amz-server-side-encryption"
+      values   = ["true"]
+    }
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "default" {
   bucket                  = aws_s3_bucket.default.id
   block_public_acls       = true
@@ -25,6 +93,9 @@ resource "aws_s3_bucket_public_access_block" "default" {
   block_public_policy     = true
   restrict_public_buckets = true
 }
+
+##
+## DynamoDB Table - Lock table
 
 resource "aws_dynamodb_table" "default" {
   name           = var.dynamo_name
@@ -46,4 +117,3 @@ resource "aws_dynamodb_table" "default" {
 
   tags = var.tags
 }
-

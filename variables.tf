@@ -13,7 +13,7 @@ variable "bucket" {
 
 variable "force_destroy" {
   type    = string
-  default = "true"
+  default = true
 }
 
 variable "dynamo_name" {
