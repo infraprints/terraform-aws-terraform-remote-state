@@ -60,7 +60,7 @@ data "aws_iam_policy_document" "write" {
       identifiers = ["*"]
     }
   }
-  
+
   statement {
     sid       = "ReadWriteLockTable"
     effect    = "Allow"
