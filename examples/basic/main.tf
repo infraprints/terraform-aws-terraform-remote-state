@@ -1,19 +1,21 @@
-resource "random_id" "default" {
-  byte_length = 6
-}
+module "label" {
+  source = "git::https://gitlab.com/infraprints/modules/terraform-terraform-unique-label"
 
-locals {
-  bucket = "infraprints-${random_id.default.hex}"
+  namespace  = "Infraprints"
+  stage      = "proto"
+  name       = "terraform"
+  attributes = ["remote", "storage"]
 }
 
 module "remote_state" {
   source = "../../"
-  bucket = "infraprints-state-${local.bucket}"
-  table  = "infraprints-lock-${local.bucket}"
+  bucket = module.label.id
+  table  = module.label.id
 }
 
+
 resource "aws_iam_role" "terraform" {
-  name               = "infraprints-terraform-${local.bucket}"
+  name               = module.label.id
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -30,7 +32,6 @@ resource "aws_iam_role" "terraform" {
 }
 EOF
 }
-
 
 resource "aws_iam_role_policy" "terraform_policy" {
   name   = "TerraformRemoteState"
